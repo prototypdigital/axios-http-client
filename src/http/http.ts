@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { HttpClientConstructor } from 'types/httpClient';
+import { HttpClientConstructor, HttpClientAxiosConfig } from 'types/httpClient';
 
 export abstract class HttpClient<Model> {
   private isBaseEndpointSecure: boolean;
@@ -7,7 +7,7 @@ export abstract class HttpClient<Model> {
 
   constructor(
     { isBaseEndpointSecure = false, baseUrl, endpoint }: HttpClientConstructor,
-    config: Omit<AxiosRequestConfig<Model>, 'baseURL'>,
+    config: HttpClientAxiosConfig<Model>,
   ) {
     this.isBaseEndpointSecure = isBaseEndpointSecure;
     this.client = axios.create({
@@ -17,7 +17,9 @@ export abstract class HttpClient<Model> {
   }
 
   normalizeUrl(url: string) {
-    const splittedUrl = url.split('https://');
+    const splittedUrl = url.split(
+      this.isBaseEndpointSecure ? 'https://' : 'http://',
+    );
     const normalizedUrl = splittedUrl[1].replace(/([\/])\1+/g, '/');
 
     return this.isBaseEndpointSecure
