@@ -2,7 +2,7 @@
 
 Axios HTTP wrapper is a simple class wrapper around axios written in typescript that's made to generalize API calls for the whole project, to make API calls easier, and to make your code cleaner.
 
-You can use this wrapper as you want but our advice is to create one file (or if you're using React, create a hook) where you will instantiate one generalized `HttpClient` class and configure your axios client as you want. And then reused in your services.
+You can use this wrapper as you want but our advice is to create one file (or if you're using React, create a hook) where you will instantiate one generalized `HttpClient` class and configure your axios client as you want. And then reuse it in your services.
 `HttpClient` class is written as an abstract class, and if you want to use it, you have to extend it. You have to pass some props to instantiate this class.
 
 ## Props
