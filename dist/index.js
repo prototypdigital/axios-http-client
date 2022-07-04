@@ -41,7 +41,7 @@ var HttpClient = /** @class */ (function () {
         this.client = axios__default["default"].create(__assign({ baseURL: this.normalizeUrl("".concat(baseUrl, "/").concat(endpoint)) }, config));
     }
     HttpClient.prototype.normalizeUrl = function (url) {
-        var splittedUrl = url.split('https://');
+        var splittedUrl = url.split(this.isBaseEndpointSecure ? 'https://' : 'http://');
         var normalizedUrl = splittedUrl[1].replace(/([\/])\1+/g, '/');
         return this.isBaseEndpointSecure
             ? "https://".concat(normalizedUrl)
