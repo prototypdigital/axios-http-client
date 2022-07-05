@@ -28,14 +28,14 @@ var __assign = function() {
 
 var HttpClient = /** @class */ (function () {
     function HttpClient(_a, config) {
-        var _b = _a.isBaseEndpointSecure, isBaseEndpointSecure = _b === void 0 ? false : _b, baseUrl = _a.baseUrl, endpoint = _a.endpoint;
-        this.isBaseEndpointSecure = isBaseEndpointSecure;
+        var _b = _a.useHttps, useHttps = _b === void 0 ? false : _b, baseUrl = _a.baseUrl, endpoint = _a.endpoint;
+        this.useHttps = useHttps;
         this.client = axios.create(__assign({ baseURL: this.normalizeUrl("".concat(baseUrl, "/").concat(endpoint)) }, config));
     }
     HttpClient.prototype.normalizeUrl = function (url) {
-        var splittedUrl = url.split(this.isBaseEndpointSecure ? 'https://' : 'http://');
+        var splittedUrl = url.split(this.useHttps ? 'https://' : 'http://');
         var normalizedUrl = splittedUrl[1].replace(/([\/])\1+/g, '/');
-        return this.isBaseEndpointSecure
+        return this.useHttps
             ? "https://".concat(normalizedUrl)
             : "http://".concat(normalizedUrl);
     };
