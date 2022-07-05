@@ -1,5 +1,5 @@
 export interface HttpClientConstructor {
-  isBaseEndpointSecure?: boolean;
+  useHttps?: boolean;
   baseUrl: string;
   endpoint?: string;
 }

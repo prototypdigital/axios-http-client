@@ -2,14 +2,14 @@ import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { HttpClientConstructor, HttpClientAxiosConfig } from 'types/httpClient';
 
 export abstract class HttpClient<Model> {
-  private isBaseEndpointSecure: boolean;
+  private useHttps: boolean;
   protected client: AxiosInstance;
 
   constructor(
-    { isBaseEndpointSecure = false, baseUrl, endpoint }: HttpClientConstructor,
+    { useHttps = false, baseUrl, endpoint }: HttpClientConstructor,
     config: HttpClientAxiosConfig<Model>,
   ) {
-    this.isBaseEndpointSecure = isBaseEndpointSecure;
+    this.useHttps = useHttps;
     this.client = axios.create({
       baseURL: this.normalizeUrl(`${baseUrl}/${endpoint}`),
       ...config,
@@ -17,12 +17,10 @@ export abstract class HttpClient<Model> {
   }
 
   normalizeUrl(url: string) {
-    const splittedUrl = url.split(
-      this.isBaseEndpointSecure ? 'https://' : 'http://',
-    );
+    const splittedUrl = url.split(this.useHttps ? 'https://' : 'http://');
     const normalizedUrl = splittedUrl[1].replace(/([\/])\1+/g, '/');
 
-    return this.isBaseEndpointSecure
+    return this.useHttps
       ? `https://${normalizedUrl}`
       : `http://${normalizedUrl}`;
   }
