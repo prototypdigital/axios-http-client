@@ -5,6 +5,15 @@ Axios HTTP wrapper is a simple class wrapper around axios written in typescript 
 You can use this wrapper as you want but our advice is to create one file (or if you're using React, create a hook) where you will instantiate one generalized `HttpClient` class and configure your axios client as you want. And then reuse it in your services.
 `HttpClient` class is written as an abstract class, and if you want to use it, you have to extend it. You have to pass some props to instantiate this class.
 
+## Installation
+
+To install and use this package run
+
+```
+yarn add ssh:git@github.com:prototypdigital/axios-http-wrapper.git#main
+yarn add https://github.com/prototypdigital/axios-http-wrapper.git#main
+```
+
 ## Props
 
 `HttpClient`'s super constructor need to take two parameters. `httpClientConstructor` and axios `config`.
@@ -13,7 +22,7 @@ You can use this wrapper as you want but our advice is to create one file (or if
 
 This object consists of three properties:
 
--   `isBaseEndpointSecure?: boolean` - which is false by default. It's used by `normalizeUrl` function that's taking care of removing any duplicated slashes if you have any. And it will prepend an `http://` or `https://` to your `baseUrl`. If `isBaseEndpointSecure = true`, `normalizeUrl` will prepend `https://` to your `baseURL` and if it's `false` it will prepend `http://`
+-   `useHttps?: boolean` - which is false by default. It's used by `normalizeUrl` function that's taking care of removing any duplicated slashes if you have any. And it will prepend an `http://` or `https://` to your `baseUrl`. If `useHttps = true`, `normalizeUrl` will prepend `https://` to your `baseURL` and if it's `false` it will prepend `http://`
 -   `baseUrl: string` - it's the base part of your API URL. It's generally an `http://0.0.0.0:PORT` or `http://localhost:PORT` if you're developing on a local environment or any other base URL if your API is published somewhere.
 -   `endpoint?: string` - as the name says it's an endpoint, when you pass it the final product will look something like this: `baseUrl/endpoint`. If `endpoint` is changing a lot it shouldn't be passed as a prop to the instantiated http client class
 
@@ -66,7 +75,7 @@ import { HttpClient, HttpClientConstructor, HttpClientAxiosConfig } from 'axios-
 export function useHttpClient<T>(endpoint?: string) {
   // Use types for autocompletion.
   const httpClientConstructor: HttpClientConstructor = {
-    isBaseEndpointSecure: false, // it's false by default, but you can define it
+    useHttps: false, // it's false by default, but you can define it
     baseUrl: 'http://some.api.url',
     endpoint,
   }
@@ -144,7 +153,7 @@ import { HttpClient, HttpClientConstructor, HttpClientAxiosConfig } from 'axios-
 
 // Type it for autocomplete.
 const httpClientConstructor: HttpClientConstructor = {
-  isBaseEndpointSecure: false, // it's false by default, but you can define it
+  useHttps: false, // it's false by default, but you can define it
   baseUrl: 'http://some.api.url',
 }
 
@@ -158,7 +167,7 @@ const config: HttpClientAxiosConfig<BaseModel> = {
 export const MyHttpClient extends HttpClient<BaseModel> {
   constructor(private endpoint?: string) {
     super({
-      isBaseEndpointSecure: false, // it's false by default, but you can define it
+      useHttps: false, // it's false by default, but you can define it
       baseUrl: 'http://some.api.url',
       endpoint: this.endpoint,
     }, config);
