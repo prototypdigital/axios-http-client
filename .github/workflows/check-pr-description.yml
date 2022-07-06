@@ -1,0 +1,20 @@
+name: 'Check if PR has description'
+
+on: 
+  pull_request:
+    types: 
+      - opened
+      - reopened
+      - edited
+
+jobs: 
+  no_description_pr:
+    name: 'Check if PR has description'
+    if: github.event.pull_request.body == null
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Close PR if there is no description
+        uses: peter-evans/close-pull@v2
+        with:
+          comment: "Please provide a description of a pull request."
+
