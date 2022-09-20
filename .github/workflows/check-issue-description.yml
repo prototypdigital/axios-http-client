@@ -1,0 +1,20 @@
+name: 'Check if issue has description'
+
+on: 
+  issues:
+    types: 
+      - opened
+      - reopened
+      - edited
+
+jobs: 
+  no_issue_description:
+    name: 'Check if issue has description'
+    if: github.event.issue.body == null 
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Close Issue if there is no description
+        uses: peter-evans/close-issue@v2
+        with:
+          comment: "Please provide a description of an issue."
+
