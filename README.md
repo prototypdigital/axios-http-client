@@ -10,8 +10,8 @@ You can use this wrapper as you want but our advice is to create one file (or if
 To install and use this package run
 
 ```
-yarn add ssh:git@github.com:prototypdigital/axios-http-wrapper.git#main
-yarn add https://github.com/prototypdigital/axios-http-wrapper.git#main
+yarn add axios-http-wrapper
+npm install axios-http-wrapper
 ```
 
 ## Props
